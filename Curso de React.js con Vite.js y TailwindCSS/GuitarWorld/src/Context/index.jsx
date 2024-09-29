@@ -3,7 +3,6 @@ import { createContext, useState } from "react";
 export const ShoppinCartContext = createContext();
 
 export const ShoppinCartProvider = ({ children }) => {
-
   // Shopping Cart . Increment Quantity
   const [count, setCount] = useState(0); // Se coloca 0 porque sera el valor inicial de nuestro ShoppinCart
 
@@ -13,9 +12,7 @@ export const ShoppinCartProvider = ({ children }) => {
   const closeProductDetail = () => setIsProductDetailOpen(false); // Para cuando este cerrado el PD
 
   // Producto Detail . Show Product
-  const [productToShow, SetProductToShow] = useState(false);
-
-
+  const [productToShow, setProductToShow] = useState({});
 
   // console.log("Contador: ", count);
 
@@ -28,6 +25,8 @@ export const ShoppinCartProvider = ({ children }) => {
         openProductDetail,
         closeProductDetail,
         isProductDetailOpen,
+        productToShow,
+        setProductToShow,
       }}
     >
       {children}
