@@ -1,9 +1,19 @@
+import { useContext } from "react";
+import { ShoppinCartContext } from "../../Context";
 import "./styles.css";
 
 const ProductDetail = () => {
+  const context = useContext(ShoppinCartContext); // Aqui le indico cual es el contexto que me va a leer, previamente ya importado.
+
+  console.log("Product to show: ", context.productToShow);
+
   return (
-    <aside className="product-detail flex flex-col fixed right-0 border border-black rounded-lg bg-white ">
-      <div className="flex justify-between items-center">
+    <aside
+      className={`${
+        context.isProductDetailOpen ? "flex" : "hidden"
+      } product-detail flex-col fixed right-0 border border-black rounded-lg bg-white`}
+    >
+      <div className="flex justify-between items-center p-6">
         <h2 className="font-medium text-xl p-2">Detail</h2>
         <div>
           <svg
