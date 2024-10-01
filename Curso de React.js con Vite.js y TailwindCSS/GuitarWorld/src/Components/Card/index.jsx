@@ -10,6 +10,15 @@ const Card = (data) => {
     context.setProductToShow(productDetail); // Aqui le indico cual es el contexto que me va a leer, previamente ya importado.
   };
 
+  const addProductsToCart = (event, productData) => {
+    event.stopPropagation();
+    context.setCount(context.count + 1);
+    context.setCarProducts([...context.carProducts, productData]);
+    context.openCheckOutSideMenu();
+    context.closeProductDetail();
+    console.log("Cart: ", context.carProducts);
+  };
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
@@ -26,7 +35,7 @@ const Card = (data) => {
         />
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => context.setCount(context.count++)}
+          onClick={(event) => addProductsToCart(event, data.data)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

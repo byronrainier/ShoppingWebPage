@@ -14,7 +14,13 @@ export const ShoppinCartProvider = ({ children }) => {
   // Producto Detail . Show Product
   const [productToShow, setProductToShow] = useState({});
 
-  // console.log("Contador: ", count);
+  // Carrito de Shopping . add products to cart
+  const [carProducts, setCarProducts] = useState([]);
+
+ // CheckOutSideMenu . Open / Close
+ const [isCheckOutSideMenuOpen, setIsCheckOutSideMenuOpen] = useState(false); 
+ const openCheckOutSideMenu = () => setIsCheckOutSideMenuOpen(true); // Para cuando este abierto el CheckOutSideMenu
+ const closeCheckOutSideMenu = () => setIsCheckOutSideMenuOpen(false); // Para cuando este cerrado el CheckOutSideMenu
 
   return (
     <ShoppinCartContext.Provider
@@ -27,6 +33,11 @@ export const ShoppinCartProvider = ({ children }) => {
         isProductDetailOpen,
         productToShow,
         setProductToShow,
+        carProducts,
+        setCarProducts,
+        isCheckOutSideMenuOpen,
+        openCheckOutSideMenu,
+        closeCheckOutSideMenu
       }}
     >
       {children}
