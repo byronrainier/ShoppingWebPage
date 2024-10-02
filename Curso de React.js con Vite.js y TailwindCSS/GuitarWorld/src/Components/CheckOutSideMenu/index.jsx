@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ShoppinCartContext } from "../../Context";
+import OrderCard from "../OrderCard";
 import "./styles.css";
 
 const CheckOutSideMenu = () => {
@@ -30,6 +31,17 @@ const CheckOutSideMenu = () => {
             </svg>
           </div>
         </div>
+        {
+            context.cartProducts.map(product =>
+                <OrderCard 
+                key = {product.id}
+                title = {product.title}
+                imageURL = {product.images}
+                price = {product.price}
+
+                />
+            )
+        }
       </aside>
     )
 }
