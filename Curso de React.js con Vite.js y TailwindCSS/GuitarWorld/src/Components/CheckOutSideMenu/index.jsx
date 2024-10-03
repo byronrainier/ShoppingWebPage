@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { ShoppinCartContext } from "../../Context";
 import OrderCard from "../../Components/OrderCard";
 import { totalPrice } from "../../Utils";
@@ -13,6 +14,19 @@ const CheckOutSideMenu = () => {
     );
     context.setCarProducts(filteredProducts);
   };
+
+  // Objeto que provee todos los datos de la orden de compra
+  const handleCheckOut = () => {
+    const orderToAdd = {
+      date: '03.10.2024',
+      products: context.carProducts,
+      totalProducts: context.length,
+      totalPrice: totalPrice(context.carProducts)
+    }
+
+    context.setOrder([...context.order, orderToAdd])
+    context.setCarProducts([])
+  }
 
   return (
     <aside
@@ -40,7 +54,7 @@ const CheckOutSideMenu = () => {
           </svg>
         </div>
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {context.carProducts.map((product) => (
           <OrderCard
             key={product.id}
@@ -52,13 +66,16 @@ const CheckOutSideMenu = () => {
           />
         ))}
       </div>
-      <div className="p-6">
-        <p className="flex justify-between items-center">
+      <div className="p-6 mb-3">
+        <p className="flex justify-between items-center mb-3">
           <span className="font-light">Total:</span>
           <span className="font-medium text-2xl">
             ${totalPrice(context.carProducts)}
           </span>
         </p>
+        <Link to='/my-orders/last'>
+        <button className="w-full py-3 text-white bg-black rounded-md" onClick={() => handleCheckOut()}>CheckOut</button>
+        </Link>
       </div>
     </aside>
   );

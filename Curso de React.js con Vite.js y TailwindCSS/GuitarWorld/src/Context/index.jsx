@@ -22,6 +22,10 @@ export const ShoppinCartProvider = ({ children }) => {
  const openCheckOutSideMenu = () => setIsCheckOutSideMenuOpen(true); // Para cuando este abierto el CheckOutSideMenu
  const closeCheckOutSideMenu = () => setIsCheckOutSideMenuOpen(false); // Para cuando este cerrado el CheckOutSideMenu
 
+ // Shopping Cart . Order
+ const [order, setOrder] = useState([]);
+
+
   return (
     <ShoppinCartContext.Provider
       value={{
@@ -37,7 +41,9 @@ export const ShoppinCartProvider = ({ children }) => {
         setCarProducts,
         isCheckOutSideMenuOpen,
         openCheckOutSideMenu,
-        closeCheckOutSideMenu
+        closeCheckOutSideMenu,
+        order,
+        setOrder
       }}
     >
       {children}
