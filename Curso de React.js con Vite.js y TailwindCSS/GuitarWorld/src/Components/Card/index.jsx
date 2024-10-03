@@ -1,6 +1,7 @@
 // De esta forma se importa un contexto
 import { useContext } from "react";
 import { ShoppinCartContext } from "../../Context";
+import { PlusIcon, CheckIcon } from "@heroicons/react/24/solid";
 
 const Card = (data) => {
   const context = useContext(ShoppinCartContext); // Aqui le indico cual es el contexto que me va a leer, previamente ya importado.
@@ -16,7 +17,29 @@ const Card = (data) => {
     context.setCarProducts([...context.carProducts, productData]);
     context.openCheckOutSideMenu();
     context.closeProductDetail();
-    console.log("Cart: ", context.carProducts);
+    // console.log("Cart: ", context.carProducts);
+  };
+
+  const renderIcon = (id) => {
+    const isInCart =
+      context.carProducts.filter((product) => product.id === id).length > 0;
+
+    if (isInCart) {
+      return (
+        <div className="absolute top-0 right-0 flex justify-center items-center bg-black w-6 h-6 rounded-full m-2">
+          <CheckIcon className="h-6 w-6 text-green-400"></CheckIcon>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 "
+          onClick={(event) => addProductsToCart(event, data.data)}
+        >
+          <PlusIcon className="h-6 w-6 text-black"></PlusIcon>
+        </div>
+      );
+    }
   };
 
   return (
@@ -33,25 +56,7 @@ const Card = (data) => {
           src={data.data.images[0]}
           alt={data.data.title}
         />
-        <div
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(event) => addProductsToCart(event, data.data)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-7"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-        </div>
+        {renderIcon(data.data.id)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{data.data.title}</span>
