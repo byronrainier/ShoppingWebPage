@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ShoppinCartContext = createContext();
 
@@ -25,6 +25,27 @@ export const ShoppinCartProvider = ({ children }) => {
  // Shopping Cart . Order
  const [order, setOrder] = useState([]);
 
+ // Get Products 
+ const [items, setItems] = useState(null);
+ const [filteredItems, setFilteredItems] = useState(null);
+
+// Get Products by title
+ const [searchByTitle, setSearchByTitle] = useState(null);
+ useEffect(() => {
+  fetch("https://api.escuelajs.co/api/v1/products")
+    .then((response) => response.json())
+    .then((data) => setItems(data));
+}, []);
+
+const filteredItemsByTitle = (items, searchByTitle) =>{
+  return items?.filter(item => item.title.toLowercase().includes(searchByTitle.toLowercase()))
+}
+
+useEffect(() => {
+  if(searchByTitle) setFilteredItems(filteredItemsByTitle(items,searchByTitle))
+}, [items,searchByTitle]);
+
+console.log('Filtered Items: ', filteredItems);
 
   return (
     <ShoppinCartContext.Provider
@@ -43,7 +64,11 @@ export const ShoppinCartProvider = ({ children }) => {
         openCheckOutSideMenu,
         closeCheckOutSideMenu,
         order,
-        setOrder
+        setOrder,
+        items,
+        setItems,
+        searchByTitle,
+        setSearchByTitle
       }}
     >
       {children}
